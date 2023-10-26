@@ -1,0 +1,20 @@
+{
+  "name": "dsd-weather-aps-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/00aklin/dsd-weather-aps-server.git",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node ./src/server.ts"
+  },
+  "dependencies": {
+    "axios": "^1.5.1",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.24.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.9",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
