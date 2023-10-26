@@ -5,13 +5,22 @@ import {
   fetchForecastDays,
   fetchSearchLocations,
 } from "./services/weather.service";
-const server = Fastify({});
+import cors from "@fastify/cors";
+
+const server = Fastify({
+  logger: true,
+});
+
+server.register(cors, {
+  origin: "*",
+  allowedHeaders: "*",
+  methods: "*",
+});
 
 server.get<{ Params: SearchLocationParams }>(
   "/search/:location",
   async function (request, reply) {
     const data = await fetchSearchLocations(request.params);
-
     reply.send({ data }).code(200);
   }
 );
@@ -20,12 +29,14 @@ server.get<{ Params: ForecastParams }>(
   "/forecast/:location",
   async function (request, reply) {
     const data = await fetchForecastDays(request.params);
-
-    reply.send({ data }).code(200);
+    reply.send({ data }).code(200).headers({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    });
   }
 );
 
-server.listen({ port: 4321 }, function (error, address) {
+server.listen({ port: 4321, host: "192.168.15.2" }, function (error, address) {
   if (error) {
     server.log.error(error);
     process.exit(1);
