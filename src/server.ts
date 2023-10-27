@@ -6,6 +6,8 @@ import {
   fetchSearchLocations,
 } from "./services/weather.service";
 import cors from "@fastify/cors";
+import dotenv from "dotenv";
+dotenv.config();
 
 const server = Fastify({
   logger: true,
@@ -36,10 +38,13 @@ server.get<{ Params: ForecastParams }>(
   }
 );
 
-server.listen({ port: 4321, host: "192.168.15.2" }, function (error, address) {
-  if (error) {
-    server.log.error(error);
-    process.exit(1);
+server.listen(
+  { port: 4321, host: process.env.SEVER_HOST },
+  function (error, address) {
+    if (error) {
+      server.log.error(error);
+      process.exit(1);
+    }
+    console.log(`Server is running on port ${address}`);
   }
-  console.log(`Server is running on port ${address}`);
-});
+);
